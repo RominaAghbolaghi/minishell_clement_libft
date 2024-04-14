@@ -1,0 +1,174 @@
+1) cases:  | hola   ->  i chnaged sth in error_detector.c 
+
+it works wit "cd / | echo $?",    "| hhhh"  and  "| "  
+
+
+2)  cases:  echo $":"$"+" and $""    -> in dollar.c i changed if condition in line 89
+
+		if (i == 0)
+			{
+				ft_safe_free(key);
+				if ((*str)[i] == ':' || (*str)[i] == '=' || (*str)[i] == '+')
+					return (ft_strdup("$"));// it works with echo $:$=
+				else
+					return (NULL); // it works with $'Ho''me'
+			}
+
+
+3)  cases: when we type $HOME and after that $KKKKK the exit status will be 126 but it will be 0 so in dyn_parsing.C in line 110 i added
+				if (!change_status(env_var, pipes_list, str, error))
+					return (0);
+
+
+
+4)  cases: "", "$hhhh" for handle this in execution_rules.c in line 54 i added
+			!ft_strcmp(command.cmd, "/sbin/")
+
+
+
+5)  cases: i changed export files to export oldpwd in the first show of cmd export
+
+
+6) cases: i changed unset to solve the PWD probleme
+
+7) cases: i changed cd_home 
+
+8) cases: i changed exit to have the correct resualts and in exit.c in line 46 i added
+				if (ret == -1|| ret == -2)
+					ret += 256;
+	because of exit -1, exit -2, exit 9223372036854775807 and ...
+
+9)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////HAVE To CHECK/////////////////////////////////////////////////////////////////
+
+1) error for "&"   --> do we have to change sth in error_detector.c and parser.c?
+
+
+2) !!!!!!you solved  echo $hola* and echo *
+
+
+3) mkdir a :   there is a open file 
+		FILE DESCRIPTORS: 1 open at exit.
+		
+ sleep 3 | sleep 3 | sleep 3 (faire Ctlr-C une seconde apres)	
+==3232== FILE DESCRIPTORS: 3 open at exit.
+==3232== Open file descriptor 2: /dev/pts/0
+==3232==    <inherited from parent>
+
+ echo oui | echo non | echo hola | grep hola
+==4477== FILE DESCRIPTORS: 1 open at exit.
+==4477== Open file descriptor 0:
+==4477==    <inherited from parent>
+
+ifconfig | grep hola
+==4629== FILE DESCRIPTORS: 1 open at exit.
+==4629== Open file descriptor 0:
+==4629==    <inherited from parent>
+
+
+ ls | hola
+==4680== FILE DESCRIPTORS: 3 open at exit.
+==4680== Open file descriptor 2: /dev/pts/0
+==4680==    <inherited from parent>
+
+
+
+4) env -i ./minishell it shows the entire env
+
+
+5)  cat Makefile | grep pr | head -n 5 | hello : there is a open file 
+
+6)  " | echo $? "  does not work correctly (its ok)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////// checked //////////////////////////////////////////////////////////////////
+
+i  erified untile line 522 from excel
+
+
+1) echo +
+
+2) parsing +
+
+3) signals +
+
+4) env +
+
+5) unset - just i have to solve identifier errors   *****************
+
+6) pwd +
+
+7) exit +
+
+
+
+
+
+
+
+
+
+
+
+// export2; line 116; because we type export in bash -posix it shows _ vriable.
+
+// cd; i changed cd_home beacause it does not change the oldpwd and pwd
+
+// i changed env to have min files and functions and free
+// i changed export to export oldpwd 
+
+// in prepare_exec.c line 86:
+// /*
+// if (ret != 1) //when i write if (ret > 1) exit does not work and when i write if(ret) it does not work with cd and ... but when i write if (ret != 1) it seams it works with all
+// 		return (ret);
+// */
+
+
+
+// when i execute programe with flags.sh with ctrl_c there is memo problem
+
+
+// in dollar.c 
+// i added line 79
+// /*if (!**str)
+// 		return (ft_strdup("$"));*/ to edit the erorr $'Ho''me' and i chnaged line 92
+
+// i changed double_quotes.c and dillar.c because of $ errors with "" 
+
+// in execution.c in line 55 i changed if because of the error for ""
